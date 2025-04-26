@@ -35,10 +35,10 @@ const InterviewScheduler = () => {
 
   return (
     <div className="animate-fade-in">
-      <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">Interview Scheduler</h1>
+      <h1 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-8">Interview Scheduler</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <ServiceInfo />
-        <Card className="p-6 shadow-lg rounded-xl overflow-hidden">
+        <Card className="p-6 shadow-lg rounded-xl overflow-hidden dark:bg-gray-800 dark:border-gray-700">
           <div className="space-y-6">
             <SchedulingCalendar 
               selectedDate={selectedDate}
