@@ -1,7 +1,8 @@
 
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Calendar, Mail } from "lucide-react";
+import { CheckCircle, Calendar, Mail, ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface ConfirmationScreenProps {
   date: Date;
@@ -9,6 +10,8 @@ interface ConfirmationScreenProps {
 }
 
 const ConfirmationScreen = ({ date, time }: ConfirmationScreenProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="text-center py-8 animate-scale-in">
       <div className="mb-6 flex justify-center">
@@ -44,6 +47,17 @@ const ConfirmationScreen = ({ date, time }: ConfirmationScreenProps) => {
         <Button variant="outline" className="gap-2">
           <Mail className="h-4 w-4" />
           Resend Confirmation
+        </Button>
+      </div>
+
+      <div className="mt-6">
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/')} 
+          className="gap-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Return to Calendar
         </Button>
       </div>
     </div>
