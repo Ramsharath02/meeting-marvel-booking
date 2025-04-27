@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 interface ConfirmationScreenProps {
   date: Date;
   time: string;
+  onReturnToCalendar: () => void;
 }
 
-const ConfirmationScreen = ({ date, time }: ConfirmationScreenProps) => {
+const ConfirmationScreen = ({ date, time, onReturnToCalendar }: ConfirmationScreenProps) => {
   const navigate = useNavigate();
 
   return (
@@ -20,21 +21,21 @@ const ConfirmationScreen = ({ date, time }: ConfirmationScreenProps) => {
         </div>
       </div>
       
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">
+      <h2 className="text-2xl font-bold text-gray-900 mb-2 dark:text-white">
         Interview Scheduled!
       </h2>
       
-      <p className="text-lg text-gray-600 mb-6">
+      <p className="text-lg text-gray-600 mb-6 dark:text-gray-300">
         Your interview has been scheduled for{" "}
         <span className="font-medium">{format(date, "EEEE, MMMM d, yyyy")}</span> at{" "}
         <span className="font-medium">{time}</span>
       </p>
       
       <div className="space-y-4 mb-8">
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-300">
           We've sent a confirmation email with all the details.
         </p>
-        <p className="text-gray-600">
+        <p className="text-gray-600 dark:text-gray-300">
           You'll receive a meeting link 30 minutes before your scheduled time.
         </p>
       </div>
@@ -53,7 +54,7 @@ const ConfirmationScreen = ({ date, time }: ConfirmationScreenProps) => {
       <div className="mt-6">
         <Button 
           variant="ghost" 
-          onClick={() => navigate('/')} 
+          onClick={onReturnToCalendar}
           className="gap-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
         >
           <ArrowLeft className="h-4 w-4" />

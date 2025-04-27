@@ -19,6 +19,7 @@ interface SchedulingCalendarProps {
   onBackToCalendar: () => void;
   onBackToTimeSlots: () => void;
   onFormSubmit: () => void;
+  onResetScheduler?: () => void;
 }
 
 const SchedulingCalendar = ({
@@ -30,6 +31,7 @@ const SchedulingCalendar = ({
   onBackToCalendar,
   onBackToTimeSlots,
   onFormSubmit,
+  onResetScheduler,
 }: SchedulingCalendarProps) => {
   // Generate some mock available time slots
   const generateTimeSlots = (date: Date) => {
@@ -49,22 +51,32 @@ const SchedulingCalendar = ({
     return slots;
   };
 
+  const handleReturnToCalendar = () => {
+    if (onResetScheduler) {
+      onResetScheduler();
+    } else {
+      onBackToCalendar();
+    }
+  };
+
   const renderCurrentStep = () => {
     switch (step) {
       case "calendar":
         return (
           <div className="space-y-6 animate-fade-in">
             <CardHeader className="p-0 pb-4">
-              <CardTitle className="text-2xl">Select a Date</CardTitle>
+              <CardTitle className="text-2xl dark:text-white">Select a Date</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={onDateSelect}
-                disabled={(date) => date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))}
-                className="rounded-md border p-3 w-full pointer-events-auto"
-              />
+              <div className="flex justify-center w-full">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={onDateSelect}
+                  disabled={(date) => date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))}
+                  className="rounded-md border dark:border-gray-700 p-3 w-full max-w-sm mx-auto pointer-events-auto dark:bg-gray-800"
+                />
+              </div>
             </CardContent>
           </div>
         );
@@ -76,7 +88,7 @@ const SchedulingCalendar = ({
                 <ArrowLeft className="h-4 w-4" />
                 Back
               </Button>
-              <h3 className="text-xl font-semibold ml-2">
+              <h3 className="text-xl font-semibold ml-2 dark:text-white">
                 {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")}
               </h3>
             </div>
@@ -96,10 +108,10 @@ const SchedulingCalendar = ({
                 Back
               </Button>
               <div className="ml-2">
-                <h3 className="text-xl font-semibold">
+                <h3 className="text-xl font-semibold dark:text-white">
                   {selectedDate && format(selectedDate, "EEEE, MMMM d, yyyy")}
                 </h3>
-                <p className="text-gray-600">{selectedTime}</p>
+                <p className="text-gray-600 dark:text-gray-300">{selectedTime}</p>
               </div>
             </div>
             <InterviewForm 
@@ -120,6 +132,7 @@ const SchedulingCalendar = ({
           <ConfirmationScreen
             date={selectedDate!}
             time={selectedTime!}
+            onReturnToCalendar={handleReturnToCalendar}
           />
         );
     }

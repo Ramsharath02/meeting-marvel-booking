@@ -8,6 +8,7 @@ const InterviewScheduler = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | undefined>(undefined);
   const [step, setStep] = useState<"calendar" | "timeSlots" | "form" | "confirmation">("calendar");
+  const [scheduledInterviews, setScheduledInterviews] = useState<Date[]>([]);
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
@@ -30,7 +31,16 @@ const InterviewScheduler = () => {
 
   const handleFormSubmit = () => {
     // In a real application, we would send the email and create calendar event here
+    if (selectedDate) {
+      setScheduledInterviews(prev => [...prev, selectedDate]);
+    }
     setStep("confirmation");
+  };
+
+  const resetScheduler = () => {
+    setSelectedDate(undefined);
+    setSelectedTime(undefined);
+    setStep("calendar");
   };
 
   return (
@@ -49,6 +59,7 @@ const InterviewScheduler = () => {
               onBackToCalendar={handleBackToCalendar}
               onBackToTimeSlots={handleBackToTimeSlots}
               onFormSubmit={handleFormSubmit}
+              onResetScheduler={resetScheduler}
             />
           </div>
         </Card>
